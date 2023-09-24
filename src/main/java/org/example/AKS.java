@@ -32,7 +32,6 @@ public class AKS {
         log2n *= log2n;
         long r = 2;
         while (true) {
-            // skip the iteration if r is not coprime to n
             if (gcd(BigInteger.valueOf(r), n).equals(BigInteger.ONE) && ordr(r, n) > log2n) {
                 return r;
             }
@@ -60,7 +59,6 @@ public class AKS {
         int volumeLength = volume.length;
         int kernelLength = kernel.length;
 
-        // return empty array if any of the array is empty
         if (volumeLength == 0 || kernelLength == 0) {
             return new BigInteger[0];
         }
@@ -97,8 +95,8 @@ public class AKS {
      * вычисляет массив полиномиальных коэффициентов для (x + a)^n (mod n)
      */
     public static BigInteger[] polyModN(long a, BigInteger n) {
-        BigInteger[] x = {BigInteger.valueOf(a), BigInteger.ONE}; // initializing x to power 1, i.e (x + a)
-        BigInteger[] res = {BigInteger.ONE}; // initializing res to power 0, i.e (x^0)
+        BigInteger[] x = {BigInteger.valueOf(a), BigInteger.ONE};
+        BigInteger[] res = {BigInteger.ONE};
         BigInteger counter = n;
         while (counter.compareTo(BigInteger.ZERO) > 0) {
             if (counter.mod(BigInteger.TWO).equals(BigInteger.ONE)) {
@@ -107,7 +105,7 @@ public class AKS {
             }
             x = convolve(x, x);
             x = modN(x, n);
-            counter = counter.divide(BigInteger.TWO); // divide counter by 2 in each step
+            counter = counter.divide(BigInteger.TWO);
         }
         return res;
     }
@@ -166,7 +164,6 @@ public class AKS {
     }
 
     public static boolean checkIfPrime(BigInteger n) {
-        // if n < 2 then return false
         if (n.compareTo(BigInteger.TWO) < 0) {
             throw new IllegalArgumentException("число должно быть не меньше 2");
         }
